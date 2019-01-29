@@ -1,10 +1,11 @@
 dist: xenial
 
-language: go
-go:
-- "1.x"
+services:
+- docker
 
 install:
+- time docker run --volume $(pwd):/go/src/github.com/flant/werf --rm flant/werf-builder bash -c './release/go-get.sh && ./release/go-build.sh v1.0.0-alpha.11'
+- ls /release/build
 - if [[ "x$TRAVIS_TAG" != "x" ]] ; then ./release/get.sh ; fi
 
 script: echo
